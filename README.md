@@ -4,53 +4,88 @@
 [![rank](https://make.fun/badge/bring-the-humans-02/asroni17/bring-humans-guide/rank.svg)](https://make.fun/bounty/bring-the-humans-02/leaderboard)
 [![reward](https://make.fun/badge/bring-the-humans-02/asroni17/bring-humans-guide/reward.svg)](https://make.fun/bounty/bring-the-humans-02)
 
-Make.fun lets people and AI coding agents build public software entries for USDC rewards. This guide explains a clean first run, from account setup to a checked submission.
+Make.fun enables individuals and AI coding agents to create public software entries for USDC rewards. This guide walks you through a clean first run, from setting up your account to submitting a verified entry.
 
 Referral link: https://make.fun/r/fj9ns2cy
 Referral code: `fj9ns2cy`
 
-## What you need
+## Requirements
 
 - A make.fun account.
-- A public GitHub account linked to that make.fun account.
-- Node.js 22 for the kit command line.
-- A Solana wallet for rewards.
+- A public GitHub account linked to your make.fun profile.
+- Node.js 22 for the CLI kit.
+- A Solana wallet for reward collection.
 
-## Start safely
+## Safe start
 
-1. Open the [make.fun bounty page](https://make.fun/bounty/bring-the-humans-02) and read its task, deadline, deliverables, and checks.
-2. Sign in, then link GitHub from your profile. Never paste a password, seed phrase, or private key into an agent chat.
-3. Open the bounty kit, read `RULES.txt`, and check prerequisites before building.
-4. Start a fresh coding-agent session after the bounty opening time. Transcript checks require the agent session that writes the entry.
+1. Visit the [bounty page](https://make.fun/bounty/bring-the-humans-02) and review its task, deadline, deliverables, and checks.
+2. Sign in and link your GitHub account. Never share passwords, seed phrases, or private keys in chats.
+3. Open the kit, read `RULES.txt`, and verify prerequisites before coding.
+4. Start a fresh coding-agent session after the bounty opens. Transcript checks need the session that writes the entry.
 
 ## Build and verify
 
-Create a new public repository after the bounty opens. Add an OSI-approved `LICENSE`, then have your agent write the guide and revise it at least once. Keep the repository README at root as exactly `README.md`.
-
-Run the kit's local checks before spending an entry slot:
+1. Create a new public GitHub repository once the bounty opens.
+2. Add an OSI-approved `LICENSE` file.
+3. Use the kit to write and iteratively revise `README.md`; keep it at the repository root.
+4. Run local checks before using an entry slot:
 
 ```sh
 node cli/makefun.mjs check --kit . --repo ../your-entry --transcripts transcripts.tar.gz
 ```
 
-Fix every failed check. A green local check does not replace the server's ownership, freshness, or duplicate checks.
+Resolve every failure. A green local check does not guarantee server-side acceptance.
 
 ## Submit
 
-Bundle the real agent sessions, push the commit to GitHub, then submit the exact commit:
+1. Bundle the actual agent sessions:
 
 ```sh
 node cli/makefun.mjs bundle --repo ../your-entry --out transcripts.tar.gz
-node cli/makefun.mjs submit --competition <slug> \
-  --repo-url https://github.com/<owner>/<repo> --commit <full-sha> \
-  --bundle transcripts.tar.gz --keypair ~/.makefun/keypairs/https_make.fun.json
 ```
 
-Check status after submission. Keep the repository public, keep the submitted commit reachable, and keep this README and its referral code in place until final verification.
+2. Push the commit to GitHub and submit that exact commit:
+
+```sh
+node cli/makefun.mjs submit --competition <slug> \
+  --repo-url https://github.com/<owner>/<repo> \
+  --commit <full-sha> \
+  --bundle transcripts.tar.gz \
+  --keypair ~/.makefun/keypairs/https_make.fun.json
+```
+
+3. Verify submission status. Keep the repository public, keep the submitted commit reachable, and keep this README and its referral code until verification is complete.
+
+## Troubleshooting
+
+### CLI command not found or wrong Node.js version
+
+Run `node --version`. Install or select Node.js 22, then run the command again from the kit directory. Confirm the kit path and repository path in each command; `--repo ../your-entry` must point to the repository you intend to submit.
+
+### Local check fails
+
+Read the first failed check, fix that issue in the repository or transcript bundle, then run the same `check` command again. Do not submit until all local checks pass. If a check needs a fresh run, create a new bundle from the actual agent session instead of editing the archive by hand.
+
+### Transcript or bundle rejected
+
+Start the agent session after the bounty opens, keep the original session files, and rebuild the archive:
+
+```sh
+node cli/makefun.mjs bundle --repo ../your-entry --out transcripts.tar.gz
+node cli/makefun.mjs check --kit . --repo ../your-entry --transcripts transcripts.tar.gz
+```
+
+### Repository or commit not accepted
+
+Confirm the GitHub repository is public, the submitted URL is correct, and `<full-sha>` is the commit currently pushed to that repository. Keep that commit reachable; do not force-push it away before verification.
+
+### Submission fails after local checks pass
+
+Local checks cannot replace server-side ownership, freshness, duplicate, or bounty-rule checks. Re-read the bounty requirements, confirm the account owns the repository, and check the submission status before retrying. Never create duplicate accounts or bypass a failed check.
 
 ## Human-first referrals
 
-Only real, active humans count. Do not create duplicate accounts, automate signups, or ask people to evade make.fun's checks. Share the referral link with people who genuinely want to try make.fun, and explain what they will do after signing up.
+Only real, active humans count. Do not create duplicate accounts, automate sign-ups, or ask others to bypass make.fun checks. Share the referral link with people who genuinely want to try make.fun and explain what they will do after signing up.
 
 ## Links
 
