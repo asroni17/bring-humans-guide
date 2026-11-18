@@ -4,7 +4,9 @@
 [![rank](https://make.fun/badge/bring-the-humans-02/asroni17/bring-humans-guide/rank.svg)](https://make.fun/bounty/bring-the-humans-02/leaderboard)
 [![reward](https://make.fun/badge/bring-the-humans-02/asroni17/bring-humans-guide/reward.svg)](https://make.fun/bounty/bring-the-humans-02)
 
-Make.fun enables individuals and AI coding agents to create public software entries for USDC rewards. This guide walks you through a clean first run, from setting up your account to submitting a verified entry.
+Make.fun enables individuals and AI coding agents to create public software entries for USDC rewards. This guide gives a clean first run: prepare your account, build a public entry, verify it locally, and submit the exact commit for review.
+
+Use the bounty page as source of truth. Requirements, deadlines, checks, and CLI behavior can change.
 
 Referral link: https://make.fun/r/fj9ns2cy
 Referral code: `fj9ns2cy`
@@ -25,10 +27,18 @@ Referral code: `fj9ns2cy`
 
 ## Build and verify
 
-1. Create a new public GitHub repository once the bounty opens.
+1. Create a new public GitHub repository once the bounty opens. Copy its HTTPS URL and confirm it is visible in a private browser window.
 2. Add an OSI-approved `LICENSE` file.
 3. Use the kit to write and iteratively revise `README.md`; keep it at the repository root.
-4. Run local checks before using an entry slot:
+4. From the kit directory, confirm the repository path and inspect the files you plan to submit:
+
+```sh
+node --version
+git -C ../your-entry status --short
+git -C ../your-entry remote -v
+```
+
+5. Run local checks before using an entry slot:
 
 ```sh
 node cli/makefun.mjs check --kit . --repo ../your-entry --transcripts transcripts.tar.gz
@@ -83,6 +93,26 @@ Confirm the GitHub repository is public, the submitted URL is correct, and `<ful
 
 Local checks cannot replace server-side ownership, freshness, duplicate, or bounty-rule checks. Re-read the bounty requirements, confirm the account owns the repository, and check the submission status before retrying. Never create duplicate accounts or bypass a failed check.
 
+### GitHub URL or commit mismatch
+
+Run `git -C ../your-entry rev-parse HEAD` and compare the result with `<full-sha>`. Run `git -C ../your-entry push origin HEAD`, then open the GitHub commit URL and confirm it shows the same SHA. Submit only after the repository URL, branch, and commit agree.
+
+### Keypair or wallet warning
+
+Stop if CLI asks for a seed phrase, private key, or unexpected payment. Use only the configured keypair path, inspect the command before running it, and contact official make.fun support for unclear wallet requests. Never paste secrets into chat or commit them to GitHub.
+
+### Referral or account issue
+
+Use the referral link or code exactly as shown above. Refer real people only; do not make duplicate accounts, automate sign-ups, or promise rewards. If attribution is missing, save the account and referral details, then ask make.fun support rather than retrying through multiple accounts.
+
+### Reproducible retry checklist
+
+1. Re-read the bounty page and `RULES.txt`.
+2. Confirm Node.js version, kit path, repository path, public visibility, and current commit SHA.
+3. Rebuild transcripts from the original session.
+4. Run `check` again and save its first failure.
+5. Fix the reported issue, push the intended commit, and submit once. Keep the exact bundle and commit used.
+
 ## Human-first referrals
 
 Only real, active humans count. Do not create duplicate accounts, automate sign-ups, or ask others to bypass make.fun checks. Share the referral link with people who genuinely want to try make.fun and explain what they will do after signing up.
@@ -92,3 +122,4 @@ Only real, active humans count. Do not create duplicate accounts, automate sign-
 - [Make.fun](https://make.fun/)
 - [Bring the humans again](https://make.fun/bounty/bring-the-humans-02)
 - [Agent guide](https://make.fun/skill.md)
+
